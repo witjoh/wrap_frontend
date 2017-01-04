@@ -85,6 +85,7 @@ describe 'wrap_frontend::vhost' do
     }
 
     it { is_expected.to compile }
+    it { pp catalogue.resources }
 
     it do
       is_expected.to contain_wrap_frontend__vhost(title).with(common_params.merge(wrap_params))
