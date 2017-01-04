@@ -55,6 +55,17 @@ define wrap_frontend::vhost (
   $pin_to                      = $::environment,
 ) {
 
+  ########## DEBUG
+
+  notify { "access_logs      = ${access_logs}": }
+  notify { "aliases          = ${aliases}": }
+  notify { "directories      = ${directories}": }
+  notify { "proxy_pass       = ${proxy_pass}": }
+  notify { "proxy_pass_match = ${proxy_pass_match}": }
+  notify { "rewrites         = ${rewrites}": }
+
+  ########## END_DEBUG
+
   # validation is done while collecting
   validate_bool($nonstop)
 
@@ -219,6 +230,17 @@ define wrap_frontend::vhost (
     custom_fragment          => $custom_fragment,
     action                   => $action,
   }
+
+  ########## DEBUG
+
+  notify { "hash_access_logs      = ${params_apache_vhost[access_logs]}": }
+  notify { "hash_aliases          = ${params_apache_vhost[aliases]}": }
+  notify { "hash_directories      = ${params_apache_vhost[directories]}": }
+  notify { "hash_proxy_pass       = ${params_apache_vhost[proxy_pass]}": }
+  notify { "hash_proxy_pass_match = ${params_apache_vhost[proxy_pass_match]}": }
+  notify { "hash_rewrites         = ${params_apache_vhost[rewrites]}": }
+
+  ########## END_DEBUG
 
   ensure_resource('apache::vhost', $vhostname, $params_apache_vhost)
 
